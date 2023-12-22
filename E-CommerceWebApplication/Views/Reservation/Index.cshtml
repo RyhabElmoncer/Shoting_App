@@ -1,0 +1,73 @@
+﻿@model List<E_CommerceWebApplication.Models.Reservation>
+
+<h2 class="text-center">List of Reservations</h2>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reservation in Model)
+            {
+                <tr class="@GetValidationClass(reservation)">
+                    <td>@reservation.id</td>
+                    <td>@reservation.name</td>
+                    <td>@reservation.Email</td>
+                    <td>@reservation.phone</td>
+                    <td>@reservation.date.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@reservation.id">
+                            <i class="bi bi-pencil"></i> Modifier
+                        </a>
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@reservation.id">
+                            <i class="bi bi-trash"></i> Supprimer
+                        </a>
+                        <button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#validationModal-@reservation.id">
+                            <i class="bi bi-check"></i> Valider
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Validation Modals -->
+@foreach (var reservation in Model)
+{
+    <div class="modal fade" id="validationModal-@reservation.id" tabindex="-1" role="dialog" aria-labelledby="validationModalLabel-@reservation.id" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="validationModalLabel-@reservation.id">Validation Modal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Your validation content goes here -->
+                    Validation content for reservation ID: @reservation.id
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@functions {
+    string GetValidationClass(E_CommerceWebApplication.Models.Reservation reservation)
+    {
+        return reservation.IsValidated ? "table-info" : "table-danger";
+    }
+}

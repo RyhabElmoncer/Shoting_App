@@ -1,0 +1,29 @@
+﻿@model E_CommerceWebApplication.Models.Reservation
+
+<div class="container">
+    <h2 class="text-center">Supprimer la Réservation</h2>
+
+    <p>Êtes-vous sûr de vouloir supprimer la réservation suivante?</p>
+
+    <dl class="row">
+        <dt class="col-sm-2">Nom</dt>
+        <dd class="col-sm-10">@Model.name</dd>
+        <dt class="col-sm-2">Email</dt>
+        <dd class="col-sm-10">@Model.Email</dd>
+        <dt class="col-sm-2">Téléphone</dt>
+        <dd class="col-sm-10">@Model.phone</dd>
+        <dt class="col-sm-2">Date</dt>
+        <dd class="col-sm-10">@Model.date.ToString("yyyy-MM-dd")</dd>
+    </dl>
+
+    <form asp-action="DeleteConfirmed" method="post">
+        <input type="hidden" asp-for="id" />
+
+        <div class="form-group row">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+                <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+            </div>
+        </div>
+    </form>
+</div>
